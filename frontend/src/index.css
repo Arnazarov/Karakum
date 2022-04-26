@@ -5,3 +5,8 @@ main {
 .heading {
   min-height: 8vh;
 }
+
+.title {
+  font-family: 'Julee', cursive;
+  font-size: 1.6rem;
+}
