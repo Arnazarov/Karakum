@@ -20,7 +20,10 @@ h3 {
   color: white;
 }
 .image {
-  height:600px
+  height:600px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .rating span {

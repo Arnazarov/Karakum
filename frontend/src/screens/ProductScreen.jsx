@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Rating from './../components/Rating';
+import Rating from '../components/Rating';
 import {
   Row,
   Col,
@@ -10,11 +10,20 @@ import {
   Button,
   ListGroupItem,
 } from 'react-bootstrap';
-import products from '../products';
+import axios from 'axios';
 
 const ProductScreen = () => {
   const { id } = useParams();
-  const product = products.find((element) => element._id === id);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    async function fetchProduct() {
+      const { data } = await axios.get(`/api/products/${id}`);
+      setProduct(data);
+    }
+    fetchProduct();
+  }, []);
+
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
@@ -42,16 +51,16 @@ const ProductScreen = () => {
             </ListGroupItem>
             <ListGroupItem>Price: $ {product.price}</ListGroupItem>
             <ListGroupItem>
-              Description:{' '}
-              {product.description.split('\n').map((i) => (
+              Description: {product.description}
+              {/* {product.description.split('\n').map((i) => (
                 <p>{i}</p>
-              ))}
+              ))} */}
             </ListGroupItem>
           </ListGroup>
         </Col>
         <Col md={3}>
           <Card>
-            <ListGroup>
+            <ListGroup variant="flush">
               <ListGroupItem>
                 <Row>
                   <Col>Price:</Col>
