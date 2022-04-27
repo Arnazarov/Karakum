@@ -23,7 +23,7 @@ const products = [
     price: 375.00,
     countInStock: 2,
     rating: 5.0,
-    numReviews: 8,
+    numReviews: 4,
   },
   {
     _id: '3',
@@ -36,7 +36,7 @@ const products = [
     price: 950.00,
     countInStock: 5,
     rating: 4.5,
-    numReviews: 12,
+    numReviews: 7,
   },
   {
     _id: '4',
@@ -49,7 +49,7 @@ const products = [
     price: 250.00,
     countInStock: 4,
     rating: 4.8,
-    numReviews: 12,
+    numReviews: 9,
   },
   {
     _id: '5',
@@ -118,7 +118,7 @@ const products = [
   },
   {
     _id: '10',
-    name: "Antique Yomut Turkmen Horse Trapping",
+    name: "Turkmen Horse Trapping",
     image: '../images/YomutTurkmenHorseTrapping.png',
     description:
       "Yomud Turkmen horse-trapping, handwoven in C Asia during the first quarter of the 20th century. \nThis Turkmen horse trapping features a hooked zigzag design arranged vertically in columns. The color palette is composed of the classic Turkmen colors: blues, reds, whites, and browns, with a bright orange providing a pop of color. The fine and dainty border follows the shape of the weaving and is non-contiguous. Notice the multicolor edging that alternates between red, blue, white, and orange.",

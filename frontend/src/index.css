@@ -2,11 +2,24 @@ main {
   min-height: 85vh;
 }
 
+h3 {
+  padding-top: 0.6rem;
+}
 .heading {
   min-height: 8vh;
+  background-color:#2c1a00;
 }
 
 .title {
   font-family: 'Julee', cursive;
   font-size: 1.6rem;
+}
+
+.footing {
+  background-color:#2c1a00;
+  color: white;
+}
+
+.rating span {
+  margin: 0.1rem;
 }

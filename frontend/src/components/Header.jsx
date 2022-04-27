@@ -4,16 +4,10 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 const Header = () => {
   return (
     <header>
-      <Navbar
-        className="heading"
-        bg="dark"
-        variant="dark"
-        expand="lg"
-        collapseOnSelect
-      >
+      <Navbar className="heading" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <Navbar.Brand className="title" href="/">
-            KaraKum
+            Karakum
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
