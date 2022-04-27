@@ -1,0 +1,29 @@
+[33mcommit 94eb9462d1afd518da9991ebb9ab396e554d496e[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Ovezmyrat ARNAZAROV <ala200bama@gmail.com>
+Date:   Tue Apr 26 20:25:14 2022 -0500
+
+    added Rating component
+
+[33mcommit af1708af9d9e8f5c7fedad905c10d54d1ae43dfe[m
+Author: Ovezmyrat ARNAZAROV <ala200bama@gmail.com>
+Date:   Tue Apr 26 17:53:53 2022 -0500
+
+    Added some images and bootswatch theme
+
+[33mcommit 09ef696d3e9d7a96f74fc284e22aca7b718428d9[m
+Author: Ovezmyrat ARNAZAROV <ala200bama@gmail.com>
+Date:   Mon Apr 25 18:13:37 2022 -0500
+
+    added image folder in public
+
+[33mcommit 9de2a4aa524d04e39c18755f12321dbf1be24708[m
+Author: Ovezmyrat ARNAZAROV <ala200bama@gmail.com>
+Date:   Thu Apr 21 20:27:19 2022 -0500
+
+    added footer & header components
+
+[33mcommit 2b2da89e9d575371a33ee65ec4777ef729a8f4dd[m
+Author: Ovezmyrat ARNAZAROV <ala200bama@gmail.com>
+Date:   Thu Apr 21 15:41:03 2022 -0500
+
+    frontend react setup
