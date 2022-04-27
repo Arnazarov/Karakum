@@ -1,0 +1,14 @@
+{
+  "name": "karakum",
+  "version": "1.0.0",
+  "description": "MERN e-commerce app",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon backend/server"
+  },
+  "author": "Ovez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
