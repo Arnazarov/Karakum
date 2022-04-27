@@ -21,7 +21,7 @@ async function populateDatabase() {
 
         // Import users into Users collection from users.js
         const insertedUsers = await User.insertMany(users);
-        const admin = allUsers[0]._id;
+        const admin = insertedUsers[0]._id;
 
         // Import products into Products collection from products.js
         const allProducts = products.map(p => {

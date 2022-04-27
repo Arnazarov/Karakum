@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import reviewSchema from './reviewSchema';
+import reviewSchema from './reviewSchema.js';
 
 const productSchema = new mongoose.Schema({
     user: {
@@ -48,7 +48,7 @@ const productSchema = new mongoose.Schema({
         default: 0
     },
     reviews: [reviewSchema]
-}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}})
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 const Product = mongoose.model('Product', productSchema);
 export default Product;
