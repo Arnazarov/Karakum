@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'Silk Turkmen Overcoat',
     image: '../images/SilkTurkmenOvercoat.jpg',
     description:
@@ -13,7 +12,6 @@ const products = [
     numReviews: 12,
   },
   {
-    _id: '2',
     name: 'Wool Turkmen Overcoat',
     image: '../images/WoolTurkmenOvercoat.jpg',
     description:
@@ -26,7 +24,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: '3',
     name: 'Ersari Turkmen Rug',
     image: '../images/ErsariTurkmenRug.png',
     description:
@@ -39,7 +36,6 @@ const products = [
     numReviews: 7,
   },
   {
-    _id: '4',
     name: "Mid Century Karaja Runner",
     image: '../images/MidCenturyKarajaRunner.png',
     description:
@@ -52,7 +48,6 @@ const products = [
     numReviews: 9,
   },
   {
-    _id: '5',
     name: "Turkmen Main Rug",
     image: '../images/TurkmenMainRug.png',
     description:
@@ -65,7 +60,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: '6',
     name: "Antique Turkmen Kapanuk",
     image: '../images/AntiqueTurkmenKapanuk.png',
     description:
@@ -78,7 +72,6 @@ const products = [
     numReviews: 2,
   },
   {
-    _id: '7',
     name: "Antique Beshir Turkmen",
     image: '../images/AntiqueCentralAsianTurkmenBeshirScatterRug.png',
     description:
@@ -91,7 +84,6 @@ const products = [
     numReviews: 1,
   },
   {
-    _id: '8',
     name: "Antique Tekke Turkmen Rug",
     image: '../images/TekkeTurkmen.png',
     description:
@@ -104,7 +96,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: '9',
     name: "Antique Ersari Turkmen",
     image: '../images/ErsariTurkmenAreaRug.png',
     description:
@@ -117,7 +108,6 @@ const products = [
     numReviews: 3,
   },
   {
-    _id: '10',
     name: "Turkmen Horse Trapping",
     image: '../images/YomutTurkmenHorseTrapping.png',
     description:
