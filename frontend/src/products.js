@@ -2,9 +2,9 @@ const products = [
   {
     _id: '1',
     name: 'Silk Turkmen Overcoat',
-    image: '../images/SilkTurkmenOvercoat.png',
+    image: '../images/SilkTurkmenOvercoat.jpg',
     description:
-      "A hand sewn vintage silk chapan or overcoat from the Turkmen of Northern Afghanistan. \nA chapan which means 'sewn together' in Turkic is an overcoat that is adorned with detailed threading come in a variety of colors and patterns. It is traditionally worn throughout Central Asia.",
+      "A hand sewn vintage silk chapan or overcoat from the Turkmen of Northern Afghanistan. \n A chapan which means 'sewn together' in Turkic is an overcoat that is adorned with detailed threading come in a variety of colors and patterns. It is traditionally worn throughout Central Asia.",
     brand: 'KaraKum',
     category: 'Textile',
     price: 300.00,
@@ -15,9 +15,9 @@ const products = [
   {
     _id: '2',
     name: 'Wool Turkmen Overcoat',
-    image: '../images/WoolTurkmenOvercoat.png',
+    image: '../images/WoolTurkmenOvercoat.jpg',
     description:
-      'A hand sewn vintage wool chapan or overcoat from the Turkmen of Northern Afghanistan. \nThis lovely chapan is crafted from faded blue wool. It is embellished with many lines of embroidery in purple, white, yellow, and green embroidery around its perimeter and up the sides.',
+      'A hand sewn vintage wool chapan or overcoat from the Turkmen of Northern Afghanistan. \n This lovely chapan is crafted from faded blue wool. It is embellished with many lines of embroidery in purple, white, yellow, and green embroidery around its perimeter and up the sides.',
     brand: 'KaraKum',
     category: 'Textile',
     price: 375.00,

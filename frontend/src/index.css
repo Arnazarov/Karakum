@@ -19,6 +19,9 @@ h3 {
   background-color:#2c1a00;
   color: white;
 }
+.image {
+  height:600px
+}
 
 .rating span {
   margin: 0.1rem;
