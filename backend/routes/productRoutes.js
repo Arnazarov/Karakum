@@ -12,8 +12,7 @@ router.get('/', (req, res) => {
         if (products) {
             res.send(products);
         } else {
-            res.status(404).json({ message: 'Products not found' });
-            if (err) console.error(err);
+            res.status(404).json({ message: 'Products not found', stack: err.stack });
         }
     })
 });
@@ -27,8 +26,7 @@ router.get('/:id', (req, res) => {
         if (product) {
             res.send(product);
         } else {
-            res.status(404).json({ message: 'Product not found' });
-            if (err) console.error(err);
+            res.status(404).json({ message: 'Product not found', stack: err.stack });
         }
     })
 });
