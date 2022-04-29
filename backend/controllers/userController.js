@@ -1,4 +1,5 @@
 import User from '../models-schemas/userModel.js'
+import createToken from '../utils/createJWToken.js'
 
 // @desc    Authenticate user
 // @route   POST /api/users/login
@@ -16,7 +17,7 @@ export const authenticateUser = async (req, res, next) => {
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
-                token: null
+                token: createToken(user._id)
             })
         } else {
             res.status(401);
