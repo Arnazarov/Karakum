@@ -19,7 +19,7 @@ import Message from '../components/Message';
 const ProductScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -116,7 +116,7 @@ const ProductScreen = () => {
                 <ListGroupItem>
                   <div className="d-grid gap-2">
                     <Button
-                      variant="outline-dark"
+                      className="btn-grad"
                       type="button"
                       disabled={product.countInStock === 0}
                       onClick={addToCartButtonHandler}
