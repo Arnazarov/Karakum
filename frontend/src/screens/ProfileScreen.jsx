@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { userProfileAction } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
+import {
+  userProfileAction,
+  userUpdateProfileAction,
+} from '../actions/userActions';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -13,11 +16,7 @@ const ProfileScreen = () => {
   const [cPassword, setCPassword] = useState('');
   const [message, setMessage] = useState(null);
 
-  const location = useLocation();
   const navigate = useNavigate();
-
-  const redirect = location.search ? location.search.split('=')[1] : '/';
-
   const dispatch = useDispatch();
 
   const profile = useSelector((state) => state.userProfile);
@@ -26,6 +25,9 @@ const ProfileScreen = () => {
   const login = useSelector((state) => state.userLogin);
   const { userLoginInfo } = login;
 
+  const updateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = updateProfile;
+
   useEffect(() => {
     if (!userLoginInfo) {
       navigate('/login');
@@ -33,8 +35,8 @@ const ProfileScreen = () => {
       if (!user.name) {
         dispatch(userProfileAction('profile'));
       } else {
-        setName(user.name);
-        setEmail(user.email);
+        setName(userLoginInfo.name);
+        setEmail(userLoginInfo.email);
       }
     }
   }, [userLoginInfo, navigate, dispatch, user]);
@@ -45,7 +47,9 @@ const ProfileScreen = () => {
     if (password !== cPassword) {
       setMessage('Passwords do not match');
     } else {
-      dispatch();
+      dispatch(
+        userUpdateProfileAction({ id: user._id, name, email, password })
+      );
     }
   };
 
@@ -55,6 +59,7 @@ const ProfileScreen = () => {
         <h2>User Profile</h2>
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}
+        {success && <Message variant="success">Profile Updated!</Message>}
         {loading && <Loader></Loader>}
         <Form onSubmit={signUpBtnHandler}>
           <Form.Group className="mb-3" controlId="name">
