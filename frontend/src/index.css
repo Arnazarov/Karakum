@@ -45,7 +45,7 @@ h1 {
 
 .btn-grad {background-image: linear-gradient(to right, #2b5876 0%, #4e4376  51%, #2b5876  100%)}
 .btn-grad {
-   margin: 10px;
+   margin: 10px 0px;
    text-align: center;
    transition: 0.5s;
    background-size: 200% auto;
