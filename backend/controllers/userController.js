@@ -73,7 +73,7 @@ export const registerUser = async (req, res, next) => {
 // @desc    Get user profile
 // @route   GET /api/users/profile
 // @access  Private
-export const getUserProfile = async (req, res, next) => {
+export const getUserProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user._id);
 
