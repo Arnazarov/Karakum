@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { userLoginAction } from '../actions/userActions';
+import { userLoginAction, userSignupAction } from '../actions/userActions';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Container from '../components/Container';
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+const SignupScreen = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [cPassword, setCPassword] = useState('');
+  const [message, setMessage] = useState(null);
+
   const location = useLocation();
   const navigate = useNavigate();
+
   const redirect = location.search ? location.search.split('=')[1] : '/';
+
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userLogin);
+
+  const user = useSelector((state) => state.userSignup);
   const { error, loading, userLoginInfo } = user;
 
   useEffect(() => {
@@ -23,22 +30,40 @@ const LoginScreen = () => {
     }
   }, [userLoginInfo, navigate, redirect]);
 
-  const signInBtnHandler = (e) => {
+  const signUpBtnHandler = (e) => {
     e.preventDefault();
-    dispatch(userLoginAction(email, password));
+
+    if (password !== cPassword) {
+      setMessage('Passwords do not match');
+    } else {
+      dispatch(userSignupAction(name, email, password));
+    }
   };
 
   return (
     <Container>
-      <h1>Sign In</h1>
+      <h1>Sign Up</h1>
+      {message && <Message variant="danger">{message}</Message>}
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader></Loader>}
-      <Form onSubmit={signInBtnHandler}>
+      <Form onSubmit={signUpBtnHandler}>
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="name"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Enter email"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -53,7 +78,7 @@ const LoginScreen = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Password"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -61,17 +86,29 @@ const LoginScreen = () => {
           />
         </Form.Group>
 
+        <Form.Group className="mb-3" controlId="cPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Re-enter your password"
+            value={cPassword}
+            onChange={(e) => {
+              setCPassword(e.target.value);
+            }}
+          />
+        </Form.Group>
+
         <Button className="btn-grad" type="submit">
-          Sign In
+          Register
         </Button>
       </Form>
 
       <Row className="py-3">
         <Col>
-          No account?{' '}
-          <Link to={redirect ? `/signup?redirect=${redirect}` : '/signup'}>
+          Have an account?{' '}
+          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
             {' '}
-            Sign up here
+            Sign in here
           </Link>
         </Col>
       </Row>
@@ -79,4 +116,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
