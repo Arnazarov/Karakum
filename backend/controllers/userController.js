@@ -70,6 +70,7 @@ export const registerUser = async (req, res, next) => {
     
 }
 
+
 // @desc    Get user profile
 // @route   GET /api/users/profile
 // @access  Private
@@ -86,6 +87,44 @@ export const getUserProfile = async (req, res) => {
             })
         } else {
             res.status(401);
+            res.json({
+                message:'User not found :('
+            })
+        }
+
+    } catch(err) {
+        res.status(401);
+        console.error(err);
+    }
+}
+
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+export const updateUserProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (user) {
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email; 
+
+            if(req.body.password) {
+                user.password = req.body.password;
+            }
+
+            const updatedUser = await user.save();
+
+            res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                isAdmin: updatedUser.isAdmin,
+                token: createToken(updatedUser._id)
+            })
+
+        } else {
+            res.status(404);
             res.json({
                 message:'User not found :('
             })
