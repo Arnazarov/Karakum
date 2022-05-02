@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createOrderAction } from '../actions/orderActions';
 import {
   Button,
-  Form,
   Card,
   Image,
   Row,
@@ -35,9 +35,29 @@ const PlaceOrderScreen = () => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
+  const createdOrder = useSelector((state) => state.orderCreate);
+  const { success, error, order } = createdOrder;
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+    // eslint-disable-next-line
+  }, [navigate, success]);
+
   const placeOrderBtnHandler = (e) => {
     e.preventDefault();
-    navigate('/payment');
+    dispatch(
+      createOrderAction({
+        itemsInOrder: cartItems,
+        shippingInfo: shippingInfo,
+        paymentInfo: paymentInfo,
+        paymentSummary: cart.itemsPrice,
+        taxCost: cart.taxPrice,
+        shippingCost: cart.shippingPrice,
+        totalCost: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -118,6 +138,10 @@ const PlaceOrderScreen = () => {
                   <Col>Total:</Col>
                   <Col>$ {cart.totalPrice}</Col>
                 </Row>
+              </ListGroupItem>
+
+              <ListGroupItem>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroupItem>
 
               <ListGroupItem>

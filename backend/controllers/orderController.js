@@ -1,10 +1,9 @@
-import Order from "../models-schemas/orderModel";
-
+import Order from "../models-schemas/orderModel.js";
 // @desc    Create an order
 // @route   POST /api/orders
 // @access  Private
 
-const createOrder = async(req, res, next) => {
+export const createOrder = async(req, res, next) => {
     const {itemsInOrder, shippingInfo, paymentInfo, paymentSummary, taxCost, shippingCost, totalCost} = req.body;
 
     if (itemsInOrder && itemsInOrder.length === 0) {
@@ -13,7 +12,7 @@ const createOrder = async(req, res, next) => {
         return;
     } else {
         const order = new Order({
-            user: req.user_id,
+            user: req.user._id,
             itemsInOrder, 
             shippingInfo, 
             paymentInfo, 
@@ -25,6 +24,6 @@ const createOrder = async(req, res, next) => {
 
         const createdOrder = await order.save();
 
-        res.status(201).json(createOrder);
+        res.status(201).json(createdOrder);
     }
 }
