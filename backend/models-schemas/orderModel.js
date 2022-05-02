@@ -31,13 +31,13 @@ const orderSchema = new mongoose.Schema({
             }
         }
     ],
-    shippingAddress: {
+    shippingInfo: {
         address: {type: String, required: true},
         city: {type: String, required: true},
         zipCode: {type: String, required: true},
         country: {type: String, required: true}
     },
-    paymentMethod: {
+    paymentInfo: {
         type: String,
         required: true
     },
@@ -52,7 +52,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         default: 0.0
     },
-    shipCost: {
+    shippingCost: {
         type: Number,
         required: true,
         default: 0.0
