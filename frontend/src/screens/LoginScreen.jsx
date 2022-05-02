@@ -8,11 +8,11 @@ import Message from '../components/Message';
 import Container from '../components/Container';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
-  const redirect = location.search ? location.search.split('=')[1] : '/';
+  const redirect = location.search ? `/${location.search.split('=')[1]}` : '/';
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userLogin);
   const { error, loading, userLoginInfo } = user;
