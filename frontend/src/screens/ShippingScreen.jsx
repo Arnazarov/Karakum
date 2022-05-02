@@ -26,7 +26,7 @@ const ScreenShipping = () => {
     <>
       <CheckoutLinks stepOne stepTwo></CheckoutLinks>
       <Container>
-        <h1>Shipping information</h1>
+        <h1>Shipping info</h1>
         <Form onSubmit={shippingUpBtnHandler}>
           <Form.Group className="mb-3" controlId="address">
             <Form.Label>Address</Form.Label>
@@ -77,7 +77,7 @@ const ScreenShipping = () => {
           </Form.Group>
 
           <Button className="btn-grad" type="submit">
-            &#10148; Payment
+            Continue
           </Button>
         </Form>
       </Container>

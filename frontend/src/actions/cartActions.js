@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CART_ADD_ITEM, CART_DELETE_ITEM, CART_SAVE_SHIPPING_INFO } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_DELETE_ITEM, CART_SAVE_PAYMENT_INFO, CART_SAVE_SHIPPING_INFO } from "../constants/cartConstants";
 
 export const addItemToCart = (id, qty) => async(dispatch, getState) => {
     try {
@@ -39,4 +39,13 @@ export const saveShippingInfo = (data) => (dispatch) => {
     })
 
     localStorage.setItem('shippingInfo', JSON.stringify(data));
+}
+
+export const savePaymentInfo = (paymentMethod) => (dispatch) => {
+    dispatch({
+        type: CART_SAVE_PAYMENT_INFO,
+        payload: paymentMethod
+    })
+
+    localStorage.setItem('paymentInfo', JSON.stringify(paymentMethod));
 }

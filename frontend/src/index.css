@@ -15,6 +15,9 @@ h1 {
   font-size: 1.6rem;
   padding: 0.7rem 0;
 }
+.camel-case {
+  text-transform: capitalize;
+}
 
 .heading {
   min-height: 8vh;
