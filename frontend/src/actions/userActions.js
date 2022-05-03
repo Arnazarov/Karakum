@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ORDER_USER_RESET } from "../constants/orderConstants";
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RESET, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE__FAIL, USER_PROFILE_UPDATE__REQUEST, USER_PROFILE_UPDATE__SUCCESS, USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_LIST_RESET } from "../constants/userConstants"
+import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RESET, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE__FAIL, USER_PROFILE_UPDATE__REQUEST, USER_PROFILE_UPDATE__SUCCESS, USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_LIST_RESET, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL } from "../constants/userConstants"
 
 export const userLoginAction = (email, password) => async (dispatch) => {
     try {
@@ -176,6 +176,36 @@ export const userListAction = () => async (dispatch, getState) => {
         console.log(err);
         dispatch({
             type: USER_LIST_FAIL,
+            payload: err.response && err.response.data.message ? err.response.data.message : err.message
+        })
+    }
+}
+
+export const userDeleteAction = (id) => async (dispatch, getState) => {
+    try {
+
+        dispatch({
+            type: USER_DELETE_REQUEST
+        });
+
+        const { userLogin: {userLoginInfo}} = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userLoginInfo.token}`
+            }
+        }
+
+        const { data } = await axios.delete(`/api/users/${id}`, config);
+
+        dispatch({
+            type: USER_DELETE_SUCCESS
+        });
+
+    } catch(err) {
+        console.log(err);
+        dispatch({
+            type: USER_DELETE_FAIL,
             payload: err.response && err.response.data.message ? err.response.data.message : err.message
         })
     }
