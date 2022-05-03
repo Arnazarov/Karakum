@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
   userProfileAction,
   userUpdateProfileAction,
 } from '../actions/userActions';
-import { Row, Col, Button, Form } from 'react-bootstrap';
+import { getUserOrdersAction } from '../actions/orderActions';
+import { Row, Col, Button, Form, Table } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
@@ -28,12 +30,20 @@ const ProfileScreen = () => {
   const updateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = updateProfile;
 
+  const orderList = useSelector((state) => state.orderListUser);
+  const {
+    orders,
+    loading: loadingOrderList,
+    error: errorOrderList,
+  } = orderList;
+
   useEffect(() => {
     if (!userLoginInfo) {
       navigate('/login');
     } else {
       if (!user.name) {
         dispatch(userProfileAction('profile'));
+        dispatch(getUserOrdersAction());
       } else {
         setName(userLoginInfo.name);
         setEmail(userLoginInfo.email);
@@ -115,8 +125,61 @@ const ProfileScreen = () => {
           </Button>
         </Form>
       </Col>
-      <Col md={9}>
+      <Col></Col>
+      <Col md={8}>
         <h2>My Orders</h2>
+        {loadingOrderList ? (
+          <Loader></Loader>
+        ) : errorOrderList ? (
+          <Message variant="danger">{errorOrderList}</Message>
+        ) : (
+          <Table bordered responsive size="sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>DELIVERED</th>
+                <th>DETAILS</th>
+              </tr>
+            </thead>
+            <tbody className="text-center">
+              {orders.map((o) => (
+                <tr key={o._id}>
+                  <td>{o._id}</td>
+                  <td>{o.created_at.substring(0, 10)}</td>
+                  <td>$ {o.totalCost}</td>
+                  <td>
+                    {o.isPaid ? (
+                      o.paidAt.substring(0, 10)
+                    ) : (
+                      <i
+                        className="fa-solid fa-xmark"
+                        style={{ color: 'red' }}
+                      ></i>
+                    )}
+                  </td>
+                  <td>
+                    {o.isDelivered ? (
+                      o.paidAt.substring(0, 10)
+                    ) : (
+                      <i
+                        className="fa-solid fa-xmark"
+                        style={{ color: 'red' }}
+                      ></i>
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${o._id}`}>
+                      <i className="fa-solid fa-receipt"></i>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
       </Col>
     </Row>
   );
