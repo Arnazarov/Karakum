@@ -1,4 +1,4 @@
-import {ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS} from '../constants/orderConstants'
+import {ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, ORDER_GET_REQUEST, ORDER_GET_SUCCESS, ORDER_GET_FAIL} from '../constants/orderConstants'
 import axios from "axios"
 
 export const createOrderAction = (order) => async (dispatch, getState) => {
@@ -30,4 +30,35 @@ export const createOrderAction = (order) => async (dispatch, getState) => {
             payload: err.response && err.response.data.message ? err.response.data.message : err.message
         })
     }
+}
+
+export const getOrderByIdAction = (id) => async (dispatch, getState) => {
+
+    try {
+
+        dispatch({type: ORDER_GET_REQUEST})
+
+        const { userLogin: {userLoginInfo }} = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userLoginInfo.token}`
+            }
+        }
+
+        const { data } = await axios.get(`/api/orders/${id}`, config)
+
+        dispatch({
+            type: ORDER_GET_SUCCESS,
+            payload: data
+        })
+
+
+    } catch(err) {
+        dispatch({
+            type: ORDER_GET_FAIL,
+            payload: err.response && err.response.data.message ? err.response.data.message : err.message
+        })
+    }
+
 }

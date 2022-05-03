@@ -1,4 +1,4 @@
-import {ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS} from '../constants/orderConstants'
+import {ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, ORDER_GET_REQUEST, ORDER_GET_SUCCESS, ORDER_GET_FAIL} from '../constants/orderConstants'
 
 export const createOrderReducer = (state = {}, action) => {
     switch(action.type) {
@@ -10,5 +10,25 @@ export const createOrderReducer = (state = {}, action) => {
             return { loading: false, error: action.payload}
         default:
             return state;
+    }
+}
+
+export const getOrderByIdReducer = (state = {itemsInOrder: [], shippingInfo : {}}, action) => {
+    switch(action.type) {
+        case ORDER_GET_REQUEST:
+            return {
+                ...state,
+                loading: true
+            } 
+        case ORDER_GET_SUCCESS:
+            return {
+                loading: false, success: true, order: action.payload
+            }
+        case ORDER_GET_FAIL: 
+            return {
+                loading: false, error:action.payload 
+            }
+        default:
+            return state 
     }
 }
