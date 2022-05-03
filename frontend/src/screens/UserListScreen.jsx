@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { userListAction } from '../actions/userActions';
+import { userListAction, userDeleteAction } from '../actions/userActions';
 import { Button, Table } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -17,15 +17,22 @@ const UserListScreen = () => {
   const login = useSelector((state) => state.userLogin);
   const { userLoginInfo } = login;
 
+  const deleteUser = useSelector((state) => state.userDelete);
+  const { success } = deleteUser;
+
   useEffect(() => {
     if (userLoginInfo && userLoginInfo.isAdmin) {
       dispatch(userListAction());
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, userLoginInfo]);
+  }, [dispatch, navigate, userLoginInfo, success]);
 
-  const deleteBtnHandler = (id) => {};
+  const deleteBtnHandler = (id) => {
+    if (window.confirm('Are you sure?')) {
+      dispatch(userDeleteAction(id));
+    }
+  };
   return (
     <>
       <h1>User list</h1>
