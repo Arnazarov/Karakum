@@ -148,3 +148,23 @@ export const getAllUsers = async (req, res) => {
         console.error(err);
     }
 }
+
+// @desc    Delete user
+// @route   DELETE /api/users/:id
+// @access  Private/Admin
+export const deleteUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (user) {
+            await user.remove();
+            res.json({message: 'User deleted!'})
+        }else {
+            res.status(404)
+            next(new Error('User not found :('))
+        }
+       
+    } catch(err) {
+        console.error(err);
+    }
+}
