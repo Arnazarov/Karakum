@@ -53,10 +53,10 @@ export const getOrderById = async(req, res, next) => {
     }
 }
 
-// @desc    Update order with paid status
+// @desc    Update order with pay status
 // @route   PUT /api/orders/:id/pay
 // @access  Private
-export const updateOrderWithPaidStatus = async(req, res, next) => {
+export const updateOrderWithPay = async(req, res, next) => {
     try {
         
         const order = await Order.findById(req.params.id);
