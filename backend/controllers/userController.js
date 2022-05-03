@@ -135,3 +135,16 @@ export const updateUserProfile = async (req, res) => {
         console.error(err);
     }
 }
+
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private/Admin
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.json(users);
+       
+    } catch(err) {
+        console.error(err);
+    }
+}

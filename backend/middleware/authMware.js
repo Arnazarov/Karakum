@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../models-schemas/userModel.js';
 
-const protectKarakum = async (req, res, next) => {
+export const protectKarakum = async (req, res, next) => {
     let token;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
@@ -25,4 +25,11 @@ const protectKarakum = async (req, res, next) => {
     }
 }
 
-export default protectKarakum;
+export const isAdmin = async (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
+        next()
+    } else {
+        res.status(401);
+        next(new Error('Not authorized as an admin'))
+    }
+}
