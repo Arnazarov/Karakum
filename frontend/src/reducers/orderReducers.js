@@ -13,7 +13,7 @@ export const createOrderReducer = (state = {}, action) => {
     }
 }
 
-export const getOrderByIdReducer = (state = {itemsInOrder: [], shippingInfo : {}}, action) => {
+export const getOrderByIdReducer = (state = {loading:true, itemsInOrder: [], shippingInfo : {}}, action) => {
     switch(action.type) {
         case ORDER_GET_REQUEST:
             return {
