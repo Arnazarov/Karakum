@@ -1,4 +1,4 @@
-import {ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, ORDER_GET_REQUEST, ORDER_GET_SUCCESS, ORDER_GET_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_RESET, ORDER_USER_REQUEST, ORDER_USER_SUCCESS, ORDER_USER_FAIL} from '../constants/orderConstants'
+import {ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, ORDER_GET_REQUEST, ORDER_GET_SUCCESS, ORDER_GET_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_RESET, ORDER_USER_REQUEST, ORDER_USER_SUCCESS, ORDER_USER_FAIL, ORDER_USER_RESET} from '../constants/orderConstants'
 
 export const createOrderReducer = (state = {}, action) => {
     switch(action.type) {
@@ -67,6 +67,10 @@ export const getUserOrdersReducer = (state = { order: [] }, action) => {
         case ORDER_USER_FAIL: 
             return {
                 loading: false, error:action.payload 
+            }
+        case ORDER_USER_RESET: 
+            return {
+                orders: []
             }
         default:
             return state 

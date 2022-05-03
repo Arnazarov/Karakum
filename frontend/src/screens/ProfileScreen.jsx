@@ -133,7 +133,14 @@ const ProfileScreen = () => {
         ) : errorOrderList ? (
           <Message variant="danger">{errorOrderList}</Message>
         ) : (
-          <Table bordered responsive size="sm">
+          <Table
+            className="text-center"
+            striped
+            hovered
+            bordered
+            responsive
+            size="sm"
+          >
             <thead>
               <tr>
                 <th>ID</th>
@@ -144,39 +151,40 @@ const ProfileScreen = () => {
                 <th>DETAILS</th>
               </tr>
             </thead>
-            <tbody className="text-center">
-              {orders.map((o) => (
-                <tr key={o._id}>
-                  <td>{o._id}</td>
-                  <td>{o.created_at.substring(0, 10)}</td>
-                  <td>$ {o.totalCost}</td>
-                  <td>
-                    {o.isPaid ? (
-                      o.paidAt.substring(0, 10)
-                    ) : (
-                      <i
-                        className="fa-solid fa-xmark"
-                        style={{ color: 'red' }}
-                      ></i>
-                    )}
-                  </td>
-                  <td>
-                    {o.isDelivered ? (
-                      o.paidAt.substring(0, 10)
-                    ) : (
-                      <i
-                        className="fa-solid fa-xmark"
-                        style={{ color: 'red' }}
-                      ></i>
-                    )}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/order/${o._id}`}>
-                      <i className="fa-solid fa-receipt"></i>
-                    </LinkContainer>
-                  </td>
-                </tr>
-              ))}
+            <tbody>
+              {orders &&
+                orders.map((o) => (
+                  <tr key={o._id}>
+                    <td>{o._id}</td>
+                    <td>{o.created_at.substring(0, 10)}</td>
+                    <td>$ {o.totalCost}</td>
+                    <td>
+                      {o.isPaid ? (
+                        o.paidAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className="fa-solid fa-xmark"
+                          style={{ color: 'red' }}
+                        ></i>
+                      )}
+                    </td>
+                    <td>
+                      {o.isDelivered ? (
+                        o.paidAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className="fa-solid fa-xmark"
+                          style={{ color: 'red' }}
+                        ></i>
+                      )}
+                    </td>
+                    <td>
+                      <LinkContainer to={`/order/${o._id}`}>
+                        <i className="fa-solid fa-receipt"></i>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         )}
