@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ORDER_USER_RESET } from "../constants/orderConstants";
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RESET, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE__FAIL, USER_PROFILE_UPDATE__REQUEST, USER_PROFILE_UPDATE__SUCCESS, USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS } from "../constants/userConstants"
+import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RESET, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE__FAIL, USER_PROFILE_UPDATE__REQUEST, USER_PROFILE_UPDATE__SUCCESS, USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL } from "../constants/userConstants"
 
 export const userLoginAction = (email, password) => async (dispatch) => {
     try {
@@ -142,6 +142,37 @@ export const userUpdateProfileAction = (user) => async (dispatch, getState) => {
         console.log(err);
         dispatch({
             type: USER_PROFILE_UPDATE__FAIL,
+            payload: err.response && err.response.data.message ? err.response.data.message : err.message
+        })
+    }
+}
+
+export const userListAction = () => async (dispatch, getState) => {
+    try {
+
+        dispatch({
+            type: USER_LIST_REQUEST
+        });
+
+        const { userLogin: {userLoginInfo}} = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userLoginInfo.token}`
+            }
+        }
+
+        const { data } = await axios.get(`/api/users`, config);
+
+        dispatch({
+            type: USER_LIST_SUCCESS,
+            payload: data
+        });
+
+    } catch(err) {
+        console.log(err);
+        dispatch({
+            type: USER_LIST_FAIL,
             payload: err.response && err.response.data.message ? err.response.data.message : err.message
         })
     }
