@@ -27,3 +27,18 @@ export const getProductById = (req, res) => {
         }
     })
 }
+
+// @desc    Delete single product
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
+export const deleteProduct = (req, res) => {
+
+    Product.findById(req.params.id, (err, product) => {
+        if (product) {
+            product.remove();
+            res.json({message: 'Product deleted!'});
+        } else {
+            res.status(404).json({ message: 'Product not found', stack: err.stack });
+        }
+    })
+}
