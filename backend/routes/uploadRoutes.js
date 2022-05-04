@@ -9,17 +9,17 @@ const router = express.Router();
 // Multer storage configuration that uploads files
 // to uploaded_images folder in the root
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploaded_images/')
+    destination(req, file, cb) {
+      cb(null, 'uploads/')
     },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    filename (req, file, cb) {
+      cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
     }
   })
 
 
   // Filter file extension to match jpeg/png/jpg
-  function filterFileTypes(file, cb) {
+  const filterFileTypes = (req, file, cb) => {
     const filetypes = /jpg|jpeg|png/
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
     const mimetype = filetypes.test(file.mimetype)
@@ -35,13 +35,16 @@ const storage = multer.diskStorage({
 // Multer middleware to include in routes where uploading is needed
 const upload = multer({
     storage,
-    fileFilter: function(req, file, cb) {
-        filterFileTypes(file, cb)
-    }
+    // filterFileTypes
 })
 
 router.post('/', upload.single('image'), (req, res) => {
-    res.send(`/${req.file.path}`)
+    try {
+      res.send(`${req.file.path}`)
+    } catch(err) {
+      console.log(err);
+    }
 })
+
 
 export default router;
