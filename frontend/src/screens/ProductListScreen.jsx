@@ -5,7 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Table, Row, Col } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { listProducts, deleteProductAction } from '../actions/productActions';
+import {
+  listProducts,
+  deleteProductAction,
+  createProductAction,
+} from '../actions/productActions';
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -24,13 +29,34 @@ const ProductListScreen = () => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   useEffect(() => {
-    if (userLoginInfo && userLoginInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userLoginInfo.isAdmin) {
       navigate('/login');
     }
-  }, [dispatch, navigate, userLoginInfo, successDelete]);
+
+    if (successCreate) {
+      navigate(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    navigate,
+    userLoginInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteBtnHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -38,7 +64,9 @@ const ProductListScreen = () => {
     }
   };
 
-  const createBtnHandler = () => {};
+  const createBtnHandler = () => {
+    dispatch(createProductAction());
+  };
   return (
     <>
       <Row className="align-items-center">
@@ -57,6 +85,8 @@ const ProductListScreen = () => {
       </Row>
       {loadingDelete && <Loader></Loader>}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader></Loader>}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader></Loader>
       ) : error ? (
