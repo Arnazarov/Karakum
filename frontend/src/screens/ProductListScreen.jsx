@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Table, Row, Col } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { listProducts } from '../actions/productActions';
+import { listProducts, deleteProductAction } from '../actions/productActions';
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -17,17 +17,24 @@ const ProductListScreen = () => {
   const login = useSelector((state) => state.userLogin);
   const { userLoginInfo } = login;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
   useEffect(() => {
     if (userLoginInfo && userLoginInfo.isAdmin) {
       dispatch(listProducts());
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, userLoginInfo]);
+  }, [dispatch, navigate, userLoginInfo, successDelete]);
 
   const deleteBtnHandler = (id) => {
     if (window.confirm('Are you sure?')) {
-      // TO-DO Delete product
+      dispatch(deleteProductAction(id));
     }
   };
 
@@ -40,7 +47,7 @@ const ProductListScreen = () => {
         </Col>
         <Col className="text-end">
           <Button
-            className="my-3"
+            className="my-3 btn-secondary"
             style={{ borderWidth: 'medium', borderColor: 'black' }}
             onClick={createBtnHandler}
           >
@@ -48,6 +55,8 @@ const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader></Loader>}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
         <Loader></Loader>
       ) : error ? (
