@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ORDER_USER_RESET } from "../constants/orderConstants";
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RESET, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE__FAIL, USER_PROFILE_UPDATE__REQUEST, USER_PROFILE_UPDATE__SUCCESS, USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_LIST_RESET, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL } from "../constants/userConstants"
+import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RESET, USER_PROFILE_FAIL, USER_PROFILE_REQUEST, USER_PROFILE_SUCCESS, USER_PROFILE_UPDATE__FAIL, USER_PROFILE_UPDATE__REQUEST, USER_PROFILE_UPDATE__SUCCESS, USER_SIGNUP_FAIL, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_FAIL, USER_LIST_RESET, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL } from "../constants/userConstants"
 
 export const userLoginAction = (email, password) => async (dispatch) => {
     try {
@@ -206,6 +206,43 @@ export const userDeleteAction = (id) => async (dispatch, getState) => {
         console.log(err);
         dispatch({
             type: USER_DELETE_FAIL,
+            payload: err.response && err.response.data.message ? err.response.data.message : err.message
+        })
+    }
+}
+
+
+export const userUpdateAction = (user) => async (dispatch, getState) => {
+    try {
+
+        dispatch({
+            type: USER_UPDATE_REQUEST
+        });
+
+        const { userLogin: {userLoginInfo}} = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userLoginInfo.token}`
+            }
+        }
+
+        const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+
+        dispatch({
+            type: USER_UPDATE_SUCCESS,
+        });
+
+        dispatch({
+            type: USER_PROFILE_SUCCESS,
+            payload: data
+        });
+
+    } catch(err) {
+        console.log(err);
+        dispatch({
+            type: USER_UPDATE_FAIL,
             payload: err.response && err.response.data.message ? err.response.data.message : err.message
         })
     }
