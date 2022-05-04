@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { userProfileAction, userUpdateAction } from '../actions/userActions';
 import { Button, Form } from 'react-bootstrap';
 import Loader from '../components/Loader';
@@ -14,7 +14,6 @@ const UserEditScreen = () => {
   const [isAdmin, setIsAdmin] = useState('');
 
   const { id } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

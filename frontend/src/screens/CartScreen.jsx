@@ -49,7 +49,7 @@ const CartScreen = () => {
           <ListGroup variant="flush">
             {cartItems.map((item) => (
               <ListGroupItem key={item.id}>
-                <Row>
+                <Row className="align-items-center">
                   <Col md={2}>
                     <Image
                       src={item.image}
