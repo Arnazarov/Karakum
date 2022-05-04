@@ -51,6 +51,7 @@ export const createProduct = async (req, res) => {
 
     try {
         const sampleProduct = new Product({
+            user: req.user._id,
             name: 'Sample name',
             image: '../images/sample.jpg',
             description: 'Sample desc',
