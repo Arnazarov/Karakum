@@ -152,7 +152,7 @@ export const getAllUsers = async (req, res) => {
 // @desc    Delete user
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
-export const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
 
@@ -165,6 +165,62 @@ export const deleteUser = async (req, res) => {
         }
        
     } catch(err) {
+        console.error(err);
+    }
+}
+
+// @desc    Get user by Id
+// @route   GET /api/users/:id
+// @access  Private/Admin
+export const getUserById = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+        
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404)
+            next(new Error('User not found :('))
+        }
+       
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+// @desc    Update user 
+// @route   PUT /api/users/:id
+// @access  Private/Admin
+export const updateUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        const {name, email, isAdmin} = req.body
+
+        if (user) {
+            user.name = name || user.name;
+            user.email = email || user.email;
+            
+            if (isAdmin) user.isAdmin = isAdmin;
+
+            const updatedUser = await user.save();
+
+            res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                isAdmin: updatedUser.isAdmin
+            })
+
+        } else {
+            res.status(404);
+            res.json({
+                message:'User not found :('
+            })
+        }
+
+    } catch(err) {
+        res.status(401);
         console.error(err);
     }
 }
