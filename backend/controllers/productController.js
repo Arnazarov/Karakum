@@ -102,6 +102,7 @@ export const updateProduct = async (req, res) => {
             product.countInStock = countInStock
 
             const updatedProduct = await product.save();
+            res.status(201);
             res.json(updatedProduct);
 
         } else {
@@ -114,6 +115,59 @@ export const updateProduct = async (req, res) => {
         res.status(404);
         res.json({
             message:'Failed to create a product',
+            error: err.message
+        })
+    }
+}
+
+// @desc    Create a review
+// @route   POST /api/products/:id/reviews
+// @access  Private
+export const createReview = async (req, res) => {
+
+    try {
+        const {
+            rating, comment
+        } = req.body;
+
+        const product = await Product.findById(req.params.id);
+
+        if (product) {
+            
+            const reviewed = product.reviews.find(review => review.user.toString() === req.user._id.toString());
+
+            if (reviewed) {
+                res.status(400);
+                res.json({
+                    message:'Product already has been reviewed'
+                })
+            }
+
+            const review = {
+                user: req.user._id,
+                name: req.user.name,
+                rating: Number(rating), 
+                comment
+            }
+
+            product.reviews.push(review);
+            product.numReviews = product.reviews.length;
+            product.rating = product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
+
+            const updatedProduct = await product.save();
+            res.status(201);
+            res.json(updatedProduct);
+
+        } else {
+            res.status(404);
+            res.json({
+                message:'Product not found :('
+            })
+        }
+    } catch(err) {
+        res.status(404);
+        res.json({
+            message:'Failed to create a reviews :(',
             error: err.message
         })
     }
