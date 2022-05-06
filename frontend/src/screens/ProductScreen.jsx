@@ -20,6 +20,7 @@ import {
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
+import Meta from '../components/Meta';
 
 const ProductScreen = () => {
   const { id } = useParams();
@@ -74,6 +75,7 @@ const ProductScreen = () => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta title={product.name}></Meta>
           <Row>
             <Col md={6}>
               <Image

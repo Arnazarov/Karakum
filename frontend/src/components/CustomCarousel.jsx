@@ -27,7 +27,7 @@ const CustomCarousel = () => {
           <Link to={`/product/${product._id}`}>
             <Image src={product.image} alt={product.name} fluid></Image>
             <Carousel.Caption className="carousel-caption">
-              <h2>{product.name}</h2>
+              <h4>{product.name}</h4>
               <p>{product.description.split('.')[0] + '...'}</p>
             </Carousel.Caption>
           </Link>

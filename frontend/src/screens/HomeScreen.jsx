@@ -8,6 +8,8 @@ import { listProducts } from '../actions/productActions';
 import { useParams } from 'react-router-dom';
 import CustomPagination from '../components/CustomPagination';
 import CustomCarousel from '../components/CustomCarousel';
+import Meta from '../components/Meta';
+import { Link } from 'react-router-dom';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -22,11 +24,16 @@ const HomeScreen = () => {
 
   return (
     <>
-      {!keyword && (
+      <Meta></Meta>
+      {!keyword ? (
         <>
           <h1>Top Products</h1>
           <CustomCarousel></CustomCarousel>
         </>
+      ) : (
+        <Link to="/" className="btn btn-light">
+          Go Back
+        </Link>
       )}
       <h1>Latest Products</h1>
       {loading ? (

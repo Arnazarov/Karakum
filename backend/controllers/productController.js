@@ -13,7 +13,7 @@ export const getAllProducts = async (req, res) => {
         } : {};
 
         // items per page
-        const pageSize = 8;
+        const pageSize = 4;
 
         // current page
         const pageNumber = Number(req.query.pageNumber) || 1; 
