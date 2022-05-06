@@ -114,3 +114,29 @@ export const getAllOrders = async(req, res) => {
         console.error(err);
     }
 }
+
+// @desc    Update order with delivery status
+// @route   PUT /api/orders/:id/deliver
+// @access  Private/Admin
+export const updateOrderWithDelivery = async(req, res, next) => {
+    try {
+        
+        const order = await Order.findById(req.params.id);
+
+        if (order) {
+            order.isDelivered = true;
+            order.deliveredAt = Date.now();
+
+            const updatedOrder = await order.save();
+
+            res.json(updatedOrder)
+
+        } else {
+            res.status(404);
+            next(new Error('Order not found :('));
+        }
+  
+    } catch(err) {
+        console.error(err);
+    }
+}
