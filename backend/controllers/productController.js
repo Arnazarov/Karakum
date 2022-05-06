@@ -13,7 +13,7 @@ export const getAllProducts = async (req, res) => {
         } : {};
 
         // items per page
-        const pageSize = 4;
+        const pageSize = 8;
 
         // current page
         const pageNumber = Number(req.query.pageNumber) || 1; 
@@ -185,6 +185,27 @@ export const createReview = async (req, res) => {
         res.status(404);
         res.json({
             message:'Failed to create a reviews :(',
+            error: err.message
+        })
+    }
+}
+
+
+// @desc    Fetch top products
+// @route   GET /api/products/top
+// @access  Public
+export const getTopProducts = async (req, res) => {
+
+    try {
+        
+        const products = await Product.find({}).sort({rating: -1}).limit(3);
+
+        res.json(products)
+
+    } catch(err) {
+        res.status(404);
+        res.json({
+            message:'Cannot fetch top products :(',
             error: err.message
         })
     }

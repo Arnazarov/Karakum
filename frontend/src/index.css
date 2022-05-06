@@ -78,3 +78,30 @@ h1 {
   border-radius: 0 0.3rem 0.3rem 0 !important;
   padding: 0.25rem 1rem 0.25rem 1rem;
  }
+
+
+ .carousel-item-next,
+ .carousel-item-prev,
+ .carousel-item.active {
+   display:flex;
+ }
+
+ .carousel-caption {
+   position: absolute;
+   bottom: 0;
+ }
+
+ .carousel-caption h2, p {
+   font-style: italic;
+   color: black;
+ }
+
+ .carousel img {
+   height: 400px;
+   padding: 20px;
+   margin: 0 0 40px 0;
+ }
+
+ .carousel a {
+   margin: 0 auto;
+ }

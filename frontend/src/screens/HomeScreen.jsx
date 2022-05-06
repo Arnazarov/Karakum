@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { useParams } from 'react-router-dom';
 import CustomPagination from '../components/CustomPagination';
+import CustomCarousel from '../components/CustomCarousel';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,12 @@ const HomeScreen = () => {
 
   return (
     <>
+      {!keyword && (
+        <>
+          <h1>Top Products</h1>
+          <CustomCarousel></CustomCarousel>
+        </>
+      )}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
