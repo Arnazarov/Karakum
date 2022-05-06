@@ -139,7 +139,7 @@ export const createReview = async (req, res) => {
             if (reviewed) {
                 res.status(400);
                 res.json({
-                    message:'Product already has been reviewed'
+                    message:'Product already has been reviewed by you'
                 })
             } else {
                 const review = {
