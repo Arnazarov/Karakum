@@ -88,10 +88,25 @@ export const updateOrderWithPay = async(req, res, next) => {
 // @desc    Fetch orders of a logged in user
 // @route   GET /api/orders/myorders
 // @access  Private
-export const getMyOrders = async(req, res, next) => {
+export const getMyOrders = async(req, res) => {
     try {
         
         const orders = await Order.find({user: req.user._id});
+
+        res.json(orders);
+  
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+// @desc    Fetch all orders
+// @route   GET /api/orders
+// @access  Private/Admin
+export const getAllOrders = async(req, res) => {
+    try {
+        
+        const orders = await Order.find({}).populate('user', 'id name');
 
         res.json(orders);
   
