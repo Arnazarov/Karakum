@@ -35,6 +35,9 @@ export const userLoginAction = (email, password) => async (dispatch) => {
 
 export const userLogoutAction = () => async (dispatch) => {
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('shippingInfo');
+    localStorage.removeItem('paymentInfo');
 
     dispatch({
         type: USER_LOGOUT
@@ -48,6 +51,8 @@ export const userLogoutAction = () => async (dispatch) => {
     dispatch({
         type: USER_LIST_RESET
     })
+
+    document.location.href = '/login';
 }
 
 export const userSignupAction = (name, email, password) => async (dispatch) => {

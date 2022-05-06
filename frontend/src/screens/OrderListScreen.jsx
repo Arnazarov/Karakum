@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { userListAction, userDeleteAction } from '../actions/userActions';
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { getAllOrdersAction } from '../actions/orderActions';
 
 const OrderListScreen = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const OrderListScreen = () => {
 
   useEffect(() => {
     if (userLoginInfo && userLoginInfo.isAdmin) {
-      dispatch(userListAction());
+      dispatch(getAllOrdersAction());
     } else {
       navigate('/login');
     }
@@ -38,7 +38,7 @@ const OrderListScreen = () => {
             <tr>
               <th>ID</th>
               <th>CUSTOMER</th>
-              <th>ITEMS</th>
+              <th>DATE</th>
               <th>TOTAL</th>
               <th>PAID</th>
               <th>DELIVERED</th>
@@ -50,9 +50,9 @@ const OrderListScreen = () => {
               orders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
-                  <td>{order.user.id}</td>
-                  <td>{order.itemsInOrder.length}</td>
-                  <td>{order.totalCost}</td>
+                  <td>{order.user.name}</td>
+                  <td>{order.created_at.substring(0, 10)}</td>
+                  <td>$ {order.totalCost}</td>
                   <td>
                     {order.isPaid ? (
                       <i
@@ -80,10 +80,8 @@ const OrderListScreen = () => {
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={`/api/orders/${order._id}`}>
-                      <Button variant="light" size="sm">
-                        More info
-                      </Button>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <i className="fa-solid fa-info"></i>
                     </LinkContainer>
                   </td>
                 </tr>

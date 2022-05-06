@@ -126,7 +126,7 @@ export const getUserOrdersAction = () => async (dispatch, getState) => {
 
 }
 
-export const getAllUsersAction = () => async (dispatch, getState) => {
+export const getAllOrdersAction = () => async (dispatch, getState) => {
 
     try {
 
