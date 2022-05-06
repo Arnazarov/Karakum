@@ -141,23 +141,23 @@ export const createReview = async (req, res) => {
                 res.json({
                     message:'Product already has been reviewed'
                 })
+            } else {
+                const review = {
+                    user: req.user._id,
+                    name: req.user.name,
+                    rating: Number(rating), 
+                    comment
+                }
+    
+                product.reviews.push(review);
+                product.numReviews = product.reviews.length;
+                product.rating = product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
+    
+                const updatedProduct = await product.save();
+                res.status(201);
+                res.json(updatedProduct);
             }
-
-            const review = {
-                user: req.user._id,
-                name: req.user.name,
-                rating: Number(rating), 
-                comment
-            }
-
-            product.reviews.push(review);
-            product.numReviews = product.reviews.length;
-            product.rating = product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
-
-            const updatedProduct = await product.save();
-            res.status(201);
-            res.json(updatedProduct);
-
+            
         } else {
             res.status(404);
             res.json({
