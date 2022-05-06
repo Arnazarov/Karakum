@@ -31,10 +31,12 @@ h1 {
 
 .title {
   font-family: 'Julee', cursive;
-  font-size: 1.6rem;
+  font-size: 2.2rem;
 }
 
 .footing {
+  font-family: 'Julee', cursive;
+  font-size: 1.2rem;
   background-image: linear-gradient( 89.4deg,  rgba(74,77,103,1) -4.3%, rgba(119,125,165,1) 102.1% );
   color: white;
 }
@@ -65,4 +67,14 @@ h1 {
    background-position: right center; /* change the direction of the change here */
    color: #fff;
    text-decoration: none;
+ }
+
+ .search-input {
+   border-radius: 0.3rem 0 0 0.3rem !important;
+   padding: 0.25rem 1rem 0.25rem 1rem;
+ }
+
+ .search-btn {
+  border-radius: 0 0.3rem 0.3rem 0 !important;
+  padding: 0.25rem 1rem 0.25rem 1rem;
  }

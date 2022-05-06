@@ -1,17 +1,20 @@
 import Product from '../models-schemas/productModel.js';
 
 // @desc    Get all products
-// @route   GET /api/products
+// @route   GET /api/products?keyword
 // @access  Public
-export const getAllProducts = (req, res) => {
+export const getAllProducts = async (req, res) => {
 
-    Product.find((err, products) => {
-        if (products) {
-            res.send(products);
-        } else {
-            res.status(404).json({ message: 'Products not found', stack: err.stack });
-        }
-    })
+    try {
+        const keyword = req.query.keyword ? {
+            name: {$regex: req.query.keyword, $options: 'i'}
+        } : {};
+
+        const products = await Product.find({...keyword})
+        res.json(products);
+    } catch(err) {
+        res.status(404).json({ message: 'Products not found', stack: err.stack });
+    }
 }
 
 // @desc    Get single product
