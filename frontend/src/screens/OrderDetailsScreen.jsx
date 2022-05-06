@@ -3,6 +3,7 @@ import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getOrderByIdAction,
+  updateOrderWithDeliveryAction,
   updateOrderWithPayAction,
 } from '../actions/orderActions';
 import {
@@ -10,17 +11,22 @@ import {
   Image,
   Row,
   Col,
+  Button,
   ListGroup,
   ListGroupItem,
 } from 'react-bootstrap';
 import Message from '../components/Message';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import axios from 'axios';
-import { ORDER_PAY_RESET } from '../constants/orderConstants';
+import {
+  ORDER_DELIVERY_RESET,
+  ORDER_PAY_RESET,
+} from '../constants/orderConstants';
 
 const OrderDetailsScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [paypalSDK, setPayPalSDK] = useState(false);
 
@@ -30,6 +36,12 @@ const OrderDetailsScreen = () => {
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success } = orderPay;
 
+  const orderDelivery = useSelector((state) => state.orderDelivery);
+  const { loading: loadingDelivery, success: successDelivery } = orderDelivery;
+
+  const user = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = user;
+
   if (!loading) {
     // Calculate items price
     order.itemsCost = Number(
@@ -38,6 +50,11 @@ const OrderDetailsScreen = () => {
   }
 
   useEffect(() => {
+    if (!userLoginInfo) {
+      navigate('/login');
+    }
+
+    // add PayPal script dynamically to show buttons to redirect
     const getPayPalScript = async () => {
       const { data: paypalClientId } = await axios.get('/api/config/paypal');
       const script = document.createElement('script');
@@ -51,8 +68,9 @@ const OrderDetailsScreen = () => {
       document.body.appendChild(script);
     };
 
-    if (!order || success) {
+    if (!order || success || successDelivery) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVERY_RESET });
       dispatch(getOrderByIdAction(id));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -61,10 +79,14 @@ const OrderDetailsScreen = () => {
         setPayPalSDK(true);
       }
     }
-  }, [dispatch, id, order, success]);
+  }, [dispatch, id, order, success, successDelivery]);
 
   const paypalBtnHandler = (paymentResult) => {
     dispatch(updateOrderWithPayAction(id, paymentResult));
+  };
+
+  const deliveryBtnHandler = () => {
+    dispatch(updateOrderWithDeliveryAction(order));
   };
 
   return loading ? (
@@ -199,6 +221,23 @@ const OrderDetailsScreen = () => {
                   )}
                 </ListGroupItem>
               )}
+              {loadingDelivery && <Loader></Loader>}
+              {userLoginInfo &&
+                userLoginInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroupItem>
+                    <div className="d-grid gap-2">
+                      <Button
+                        className="btn-grad"
+                        type="button"
+                        onClick={deliveryBtnHandler}
+                      >
+                        Mark as Delivered
+                      </Button>
+                    </div>
+                  </ListGroupItem>
+                )}
             </ListGroup>
           </Card>
         </Col>
