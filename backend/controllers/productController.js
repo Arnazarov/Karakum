@@ -6,12 +6,26 @@ import Product from '../models-schemas/productModel.js';
 export const getAllProducts = async (req, res) => {
 
     try {
+
+        // search keyword
         const keyword = req.query.keyword ? {
             name: {$regex: req.query.keyword, $options: 'i'}
         } : {};
 
+        // items per page
+        const pageSize = 4;
+
+        // current page
+        const pageNumber = Number(req.query.pageNumber) || 1; 
+        
+        const count = await Product.countDocuments({...keyword});
+
         const products = await Product.find({...keyword})
-        res.json(products);
+            .limit(pageSize)
+            .skip(pageSize*(pageNumber-1));
+
+        res.json({products, pageNumber, pages: Math.ceil(count / pageSize)});
+
     } catch(err) {
         res.status(404).json({ message: 'Products not found', stack: err.stack });
     }
