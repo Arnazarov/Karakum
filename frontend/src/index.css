@@ -96,6 +96,10 @@ h1 {
    color: black;
  }
 
+ .carousel-caption h4 {
+  display: none;
+}
+
  .carousel img {
    height: 300px;
    padding: 20px;
@@ -104,4 +108,17 @@ h1 {
 
  .carousel a {
    margin: 0 auto;
+ }
+
+ @media screen and (max-width: 480px) {
+   .carousel-caption p {
+     display: none;
+   }
+
+   .carousel-caption h4 {
+     display:block;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
  }
