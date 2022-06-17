@@ -11,7 +11,7 @@
         "dev": "concurrently \"npm run server\" \"npm run client\" ",
         "data:populate": "node backend/dataDistributor -p",
         "data:clear": "node backend/dataDistributor -c",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend --force && npm run build --prefix frontend"
     },
     "author": "Ovez",
     "license": "ISC",
