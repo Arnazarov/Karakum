@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { userLoginAction } from '../actions/userActions';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import Loader from '../components/Loader';
@@ -12,6 +12,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+  const demo = location.search && `${location.search.split('=')[1]}`;
   const redirect = location.search ? `/${location.search.split('=')[1]}` : '/';
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userLogin);
@@ -22,6 +23,13 @@ const LoginScreen = () => {
       navigate(redirect);
     }
   }, [userLoginInfo, navigate, redirect]);
+
+  useEffect(() => {
+    if (demo === 'demo') {
+      setPassword('demo123456');
+      setEmail('demo@gmail.com');
+    }
+  }, [demo]);
 
   const signInBtnHandler = (e) => {
     e.preventDefault();
