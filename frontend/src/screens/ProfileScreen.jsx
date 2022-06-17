@@ -149,7 +149,7 @@ const ProfileScreen = () => {
                 orders.map((o) => (
                   <tr key={o._id}>
                     <td>{o._id}</td>
-                    <td>{o.created_at.substring(0, 10)}</td>
+                    <td>{o.createdAt.substring(0, 10)}</td>
                     <td>$ {o.totalCost}</td>
                     <td>
                       {o.isPaid ? (
