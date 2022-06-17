@@ -13,7 +13,10 @@ const LoginScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const demo = location.search && `${location.search.split('=')[1]}`;
-  const redirect = location.search ? `/${location.search.split('=')[1]}` : '/';
+  const redirect =
+    location.search !== '?demo=demo'
+      ? `/${location.search.split('=')[1]}`
+      : '/';
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userLogin);
   const { error, loading, userLoginInfo } = user;
