@@ -51,17 +51,22 @@ $PROJECT_ROOT
 
 - **Backend**
 
-        - bcryptjs					: enables storing of passwords as hashed passwords
-        - colors       				: get colors in your node.js console
-        - dotenv                			: loads environment variables from .env file
-        - jsonwebtoken      				: allows you to decode, verify and generate JWT
-        - morgan     					: HTTP request logger middleware for node.js
-        - multer					: middleware for handling multipart/form-data i.e images
-
+		- bcryptjs					: enables storing of passwords as hashed passwords
+		- colors       				: get colors in your node.js console
+		- dotenv                			: loads environment variables from .env file
+		- jsonwebtoken      				: allows you to decode, verify and generate JWT
+		- morgan     					: HTTP request logger middleware for node.js
+		- multer					: middleware for handling multipart/form-data i.e images
 
 - **Frontend**
     
-   - axios : promise based HTTP client for the browser and Node.js - react-helmet : secure your Express apps by setting various HTTP headers - react-bootstrap : Bootstrap components built with React - react-router-bootstrap : integration between React-Router and React-Bootstrap - redux : manages and centralizes application state - react-redux : React UI bindings layer for Redux - react-paypal-button-v2 : React button component to implement PayPal's Checkout
+		- axios                                    	: promise based HTTP client for the browser and Node.js
+		- react-helmet 				: secure your Express apps by setting various HTTP headers 
+		- react-bootstrap 				: Bootstrap components built with React 
+		- react-router-bootstrap 			: integration between React-Router and React-Bootstrap 
+		- redux 					: manages and centralizes application state
+		- react-redux 				: React UI bindings layer for Redux 								
+		- react-paypal-button-v2 			: React button component to implement PayPal's Checkout
 
 ## Steps to Install & Run
 
